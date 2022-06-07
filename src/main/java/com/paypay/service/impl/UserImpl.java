@@ -65,10 +65,10 @@ public class UserImpl implements UserService {
     public Response login(LoginRequest loginRequest) throws Exception {
         data = new HashMap<>();
         User emailDb = userRepo.findByEmail(loginRequest.getEmail());
+        validation.loginUser(emailDb, loginRequest);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         Response token = jwtUtil.generateJWT(authentication);
-        validation.loginUser(emailDb, loginRequest);
         response = token;
         return response;
     }
@@ -92,7 +92,7 @@ public class UserImpl implements UserService {
         user = mapper.map(userDb, User.class);
         validation.forgetPass(forgetPassRequest);
         if (forgetPassRequest.getSameNewPassword() != null) {
-            user.setPassword(forgetPassRequest.getSameNewPassword());
+            user.setPassword(passwordEncoder.encode(forgetPassRequest.getSameNewPassword()));
             userRepo.save(user);
         }
         UserResponse res = mapper.map(user, UserResponse.class);

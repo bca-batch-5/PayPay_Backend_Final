@@ -28,8 +28,6 @@ public class UserValidation {
     }
 
     public void loginUser(User emailDb, LoginRequest loginRequest) throws Exception {
-        loginRequest.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-        String passEncoded = loginRequest.getPassword();
         if (emailDb == null) {
             throw new BadRequestException("Email tidak terdaftar");
         }

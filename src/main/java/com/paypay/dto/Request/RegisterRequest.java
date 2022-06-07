@@ -16,4 +16,5 @@ public class RegisterRequest {
     private String password;
     @NotNull(message = "pin must be fill")
     private Integer pin;
+    private String image;
 }

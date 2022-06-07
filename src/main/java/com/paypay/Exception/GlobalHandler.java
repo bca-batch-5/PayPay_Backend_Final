@@ -1,8 +1,13 @@
 package com.paypay.Exception;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,6 +32,18 @@ public class GlobalHandler {
         exception.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
         response = new Response(HttpStatus.BAD_REQUEST.value(), exception.getFieldError().getDefaultMessage(), errors);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(value = BadCredentialsException.class)
+    public ResponseEntity<?> handlePassException(BadCredentialsException exception) {
+        response = new Response(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), null);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(value = InternalAuthenticationServiceException.class)
+    public ResponseEntity<?> handleEmailException(InternalAuthenticationServiceException exception) {
+        response = new Response(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage(), null);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
