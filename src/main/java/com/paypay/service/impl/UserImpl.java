@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +66,8 @@ public class UserImpl implements UserService {
         data = new HashMap<>();
         User emailDb = userRepo.findByEmail(loginRequest.getEmail());
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
-        authenticationManager.authenticate(authenticationToken);
-        Response token = jwtUtil.generateJWT(authenticationToken);
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        Response token = jwtUtil.generateJWT(authentication);
         validation.loginUser(emailDb, loginRequest);
         response = token;
         return response;

@@ -30,8 +30,8 @@ public class FilterConfig extends OncePerRequestFilter {
             throws ServletException, IOException {
         String headerAuth = request.getHeader("Authorization");
         // check header is null or not
-        if (headerAuth != null && headerAuth.startsWith("Bearer ")) {
-            String jwtToken = headerAuth.substring(7, headerAuth.length());
+        if (headerAuth != null && headerAuth.startsWith("Bearer")) {
+            String jwtToken = headerAuth.substring(0, headerAuth.length());
             if (jwtToken != null && jwtUtil.validateToken(jwtToken)) {
                 String email = jwtUtil.getUsernameFromToken(jwtToken);
 
@@ -46,6 +46,17 @@ public class FilterConfig extends OncePerRequestFilter {
             }
 
         }
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization");
+        response.setHeader("Access-Control-Max-Age", "3600");
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+          } else {
+            filterChain.doFilter(request, response);
+          }
     }
 
     // @Override

@@ -1,5 +1,6 @@
 package com.paypay.config;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -7,13 +8,12 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.paypay.dto.Response.Response;
+import com.paypay.service.impl.UserDetailsImpl;
 
 import io.jsonwebtoken.Jwts;
 
@@ -21,11 +21,13 @@ import io.jsonwebtoken.Jwts;
 public class JwtUtil {
     private Response response;
 
+    private String JWT_SECRET = "secretKey";
+
     public Response generateJWT(Authentication authentication) {
         HashMap<String, String> tokens = new HashMap<String, String>();
-        UserDetails user = (UserDetails) authentication.getPrincipal();
+        UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
         // secret di taruh di tempat yang secure seperti enviroment variable
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET.getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
@@ -46,7 +48,9 @@ public class JwtUtil {
     }
 
     public String getUsernameFromToken(String token) {
+        String base64Secret = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes());
         return Jwts.parser()
+                .setSigningKey(base64Secret)
                 .parseClaimsJws(token)
                 .getBody()
                 .get("email")
@@ -55,8 +59,9 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-
+            String base64Secret = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes());
             Jwts.parser()
+                    .setSigningKey(base64Secret)
                     .parseClaimsJws(token);
 
             return true;

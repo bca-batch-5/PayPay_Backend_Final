@@ -5,12 +5,15 @@ com\paypay\config\PayPaySecurityConfig.class
 com\paypay\dto\Response\Response.class
 com\paypay\dto\Request\RegisterRequest.class
 com\paypay\Exception\BadRequestException.class
+com\paypay\config\JwtUtil.class
 com\paypay\constant\VariableConstant.class
 com\paypay\config\PayPayConfig.class
 com\paypay\dto\Response\UserResponse.class
 com\paypay\Exception\GlobalHandler.class
 com\paypay\repository\UserRepo.class
+com\paypay\service\impl\UserDetailsServiceImpl.class
 com\paypay\service\UserService.class
+com\paypay\config\CorsConfig.class
 com\paypay\validation\UserValidation.class
 com\paypay\dto\Request\LoginRequest.class
 com\paypay\service\impl\UserDetailsImpl.class

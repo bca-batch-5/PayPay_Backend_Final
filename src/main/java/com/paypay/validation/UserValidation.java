@@ -39,9 +39,7 @@ public class UserValidation {
         if (!emailDb.getEmail().contains(".com")) {
             throw new BadRequestException("Format email tidak tersedia");
         }
-        if (!loginRequest.getPassword().equals(emailDb.getPassword())) {
-            throw new BadRequestException("Password tidak sesuai");
-        }
+       
     }
 
     public void checkingUserByEmail(User user) throws Exception {
