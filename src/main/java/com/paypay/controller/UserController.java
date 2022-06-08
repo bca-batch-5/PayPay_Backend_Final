@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.RegisterRequest;
@@ -29,6 +30,12 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) throws Exception{
         response = userService.register(registerRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @PostMapping("/create-pin")
+    public ResponseEntity<?> createPin(@Valid @RequestBody CreatePinRequest createPinRequest) throws Exception{
+        response = userService.createPin(createPinRequest) ;
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

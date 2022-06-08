@@ -52,6 +52,7 @@ public class PayPaySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/paypay/create-pin").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/paypay/login").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/paypay/register").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/paypay/forget-pass").permitAll();

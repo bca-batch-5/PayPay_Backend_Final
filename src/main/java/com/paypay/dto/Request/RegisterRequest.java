@@ -7,10 +7,11 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
     private Integer idUser;
-    
+    @NotEmpty(message = "Email must be fill")
     private String email;
+    @NotEmpty(message = "username must be fill")
     private String username;
+    @NotEmpty(message = "password musti be fill")
     private String password;
-    private Integer pin;
     private String image;
 }

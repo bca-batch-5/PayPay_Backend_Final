@@ -1,7 +1,6 @@
 package com.paypay.dto.Request;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 

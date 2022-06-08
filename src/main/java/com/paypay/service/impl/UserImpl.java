@@ -10,8 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.paypay.Exception.BadRequestException;
 import com.paypay.config.JwtUtil;
 import com.paypay.constant.VariableConstant;
+import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.RegisterRequest;
@@ -53,26 +55,28 @@ public class UserImpl implements UserService {
         User emailDb = new User();
         User user = new User();
         emailDb = userRepo.findByEmail(registerRequest.getEmail());
-        if (existingEmail == true) {
-            validation.createUser(emailDb, registerRequest);
-        }
+        validation.createUser(emailDb, registerRequest);
         user = mapper.map(registerRequest, User.class);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        data.put(2, user);
-        validation.validationEmail(registerRequest);
-
-        if (existingEmail == false && emailDb != null) {
-            User currentUser = data.get(2);
-            user = mapper.map(currentUser, User.class);
-            user.setPin(registerRequest.getPin());
-            existingEmail = true;
-        } else {
-            existingEmail = false;
-        }
         userRepo.save(user);
+        data.put(2, user);
         UserResponse res = mapper.map(user, UserResponse.class);
-
         response = new Response(varconstant.getSTATUS_CREATED(), "User Created", res);
+        return response;
+    }
+
+    @Override
+    public Response createPin(CreatePinRequest createPinRequest) throws Exception {
+        User user = data.get(2);
+        UserResponse res = new UserResponse();
+        if(user != null){
+            user.setPin(createPinRequest.getPin());
+            userRepo.save(user);
+            res = mapper.map(user, UserResponse.class);
+        }else{
+            throw new BadRequestException("Akun tidak ada");
+        }
+        response = new Response(varconstant.getSTATUS_CREATED(), "Pin Created", res);
         return response;
     }
 
@@ -117,4 +121,6 @@ public class UserImpl implements UserService {
         response = new Response(varconstant.getSTATUS_OK(), "Success", res);
         return response;
     }
+
+    
 }
