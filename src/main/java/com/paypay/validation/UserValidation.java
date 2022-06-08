@@ -19,12 +19,20 @@ public class UserValidation {
         if (emailDb != null) {
             throw new BadRequestException("Email sudah terdaftar");
         }
-        if (!userReq.getEmail().contains("@")) {
+        if (!userReq.getEmail().contains("@")|| userReq.getEmail() == null) {
             throw new BadRequestException("Format email tidak tersedia");
         }
-        if (!userReq.getEmail().contains(".com")) {
+        if (!userReq.getEmail().contains(".com") || userReq.getEmail() == null) {
             throw new BadRequestException("Format email tidak tersedia");
         }
+        if(userReq.getPassword().length() < 8 || userReq.getPassword() == null){
+            throw new BadRequestException("Password harus lebih dari 8 word atau lebih");
+        }
+        
+    }
+
+    public void validationEmail(RegisterRequest userReq) throws Exception{
+        
     }
 
     public void loginUser(User emailDb, LoginRequest loginRequest) throws Exception {

@@ -48,25 +48,41 @@ public class UserImpl implements UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    
     @Override
     public Response register(RegisterRequest registerRequest) throws Exception {
-        User emailDb = userRepo.findByEmail(registerRequest.getEmail());
-        validation.createUser(emailDb, registerRequest);
-        User user = mapper.map(registerRequest, User.class);
+        User emailDb = new User();
+        User user = new User();
+        emailDb = userRepo.findByEmail(registerRequest.getEmail());
+        if (existingEmail == true) {
+            validation.createUser(emailDb, registerRequest);
+        }
+        user = mapper.map(registerRequest, User.class);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        data.put(2, user);
+        validation.validationEmail(registerRequest);
+
+        if (existingEmail == false && emailDb != null) {
+            User currentUser = data.get(2);
+            user = mapper.map(currentUser, User.class);
+            user.setPin(registerRequest.getPin());
+            existingEmail = true;
+        } else {
+            existingEmail = false;
+        }
         userRepo.save(user);
         UserResponse res = mapper.map(user, UserResponse.class);
+
         response = new Response(varconstant.getSTATUS_CREATED(), "User Created", res);
         return response;
     }
-    
+
     @Override
     public Response login(LoginRequest loginRequest) throws Exception {
         data = new HashMap<>();
         User emailDb = userRepo.findByEmail(loginRequest.getEmail());
         validation.loginUser(emailDb, loginRequest);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(), loginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         Response token = jwtUtil.generateJWT(authentication);
         response = token;
@@ -101,5 +117,4 @@ public class UserImpl implements UserService {
         response = new Response(varconstant.getSTATUS_OK(), "Success", res);
         return response;
     }
-
 }
