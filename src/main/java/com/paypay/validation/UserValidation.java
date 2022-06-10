@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.paypay.Exception.BadRequestException;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
+import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
 import com.paypay.model.User;
 
@@ -54,13 +55,10 @@ public class UserValidation {
         }
     }
 
-    public void forgetPass(ForgetPassRequest forgetPassRequest) throws Exception {
-        if (!forgetPassRequest.getEmail().contains("@")) {
-            throw new BadRequestException("Format email tidak tersedia");
-        }
-        if (!forgetPassRequest.getEmail().contains(".com")) {
-            throw new BadRequestException("Format email tidak tersedia");
-        }
+    public void forgetPass(NewPassRequest forgetPassRequest) throws Exception {
+        // if(userDb == null){
+        //     throw new BadRequestException("Email Tidak terdaftar");
+        // }
         if (forgetPassRequest.getNewPassword() != null && forgetPassRequest.getSameNewPassword() != null) {
             if (!forgetPassRequest.getNewPassword().equals(forgetPassRequest.getSameNewPassword())) {
                 throw new BadRequestException("Password tidak sesuai");

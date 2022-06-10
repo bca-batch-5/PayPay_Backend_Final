@@ -16,6 +16,7 @@ import com.paypay.constant.VariableConstant;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
+import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.dto.Response.UserResponse;
@@ -23,6 +24,8 @@ import com.paypay.model.User;
 import com.paypay.repository.UserRepo;
 import com.paypay.service.UserService;
 import com.paypay.validation.UserValidation;
+
+import lombok.experimental.var;
 
 @Service
 public class UserImpl implements UserService {
@@ -69,11 +72,22 @@ public class UserImpl implements UserService {
     public Response createPin(CreatePinRequest createPinRequest) throws Exception {
         User user = data.get(2);
         UserResponse res = new UserResponse();
-        if(user != null){
-            user.setPin(createPinRequest.getPin());
+        if (user != null) {
+            if (createPinRequest.getPin() == null) {
+                throw new BadRequestException("Pin tidak ada");
+            }
+            if (createPinRequest.getPin().size() < 6) {
+                throw new BadRequestException("Pin harus di isi semua");
+            }
+            String temp = "";
+            for (int i = 0; i < createPinRequest.getPin().size(); i++) {
+                temp += createPinRequest.getPin().get(i);
+            }
+            Integer pin = Integer.parseInt(temp);
+            user.setPin(pin);
             userRepo.save(user);
             res = mapper.map(user, UserResponse.class);
-        }else{
+        } else {
             throw new BadRequestException("Akun tidak ada");
         }
         response = new Response(varconstant.getSTATUS_CREATED(), "Pin Created", res);
@@ -96,31 +110,24 @@ public class UserImpl implements UserService {
     @Override
     public Response forgetPass(ForgetPassRequest forgetPassRequest) throws Exception {
         User userDb = userRepo.findByEmail(forgetPassRequest.getEmail());
-        if (existingEmail == true) {
-            validation.checkingUserByEmail(userDb);
-        }
-        if (forgetPassRequest.getEmail() == null) {
-            User emailCurrent = data.get(1);
-            forgetPassRequest.setEmail(emailCurrent.getEmail());
-            userDb = mapper.map(emailCurrent, User.class);
-        }
-        User user = new User();
-        if (userDb != null) {
-            data.put(1, userDb);
-        }
-
-        user = mapper.map(userDb, User.class);
-        validation.forgetPass(forgetPassRequest);
-        if (forgetPassRequest.getSameNewPassword() != null) {
-            user.setPassword(passwordEncoder.encode(forgetPassRequest.getSameNewPassword()));
-            userRepo.save(user);
-        }
-        UserResponse res = mapper.map(user, UserResponse.class);
-
-        existingEmail = false;
-        response = new Response(varconstant.getSTATUS_OK(), "Success", res);
+        validation.checkingUserByEmail(userDb);
+        data.put(1, userDb);
+        response = new Response(varconstant.getSTATUS_OK(), "Success", null);
         return response;
     }
 
-    
+    @Override
+    public Response inputNewPass(NewPassRequest newPassRequest) throws Exception {
+        if (data.get(1) == null) {
+            throw new BadRequestException("Error Email belum di masukan");
+        } else {
+            validation.forgetPass(newPassRequest);
+            User currentUser = data.get(1);
+            currentUser.setPassword(passwordEncoder.encode(newPassRequest.getSameNewPassword()));
+            userRepo.save(currentUser);
+            response = new Response(varconstant.getSTATUS_OK(), "Password telah terganti", currentUser);
+        }
+        return response;
+    }
+
 }

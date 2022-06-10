@@ -42,7 +42,7 @@ public class JwtUtil {
                 .withIssuedAt(new Date())
                 .sign(algorithm);
         tokens.put("accessToken", access_token);
-        tokens.put("refreshToken", refresh_token);
+        tokens.put("email", user.getUsername());
         response = new Response(HttpStatus.CREATED.value(), "Created Tokens", tokens);
         return response;
     }

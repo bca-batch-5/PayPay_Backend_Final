@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
+import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.service.UserService;
@@ -48,6 +49,12 @@ public class UserController {
     @PutMapping("/forget-pass")
     public ResponseEntity<?> forgetPass(@Valid @RequestBody ForgetPassRequest forgetPassRequest) throws Exception{
         response = userService.forgetPass(forgetPassRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @PutMapping("/forget-pass/new-pass")
+    public ResponseEntity<?> inputNewPass(@RequestBody NewPassRequest newPassRequest) throws Exception{
+        response = userService.inputNewPass(newPassRequest);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
