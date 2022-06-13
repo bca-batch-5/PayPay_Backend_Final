@@ -25,7 +25,7 @@ import com.paypay.repository.UserRepo;
 import com.paypay.service.UserService;
 import com.paypay.validation.UserValidation;
 
-import lombok.experimental.var;
+// import lombok.experimental.var;
 
 @Service
 public class UserImpl implements UserService {
