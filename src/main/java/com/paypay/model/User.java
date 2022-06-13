@@ -25,6 +25,4 @@ public class User {
     private String password;
     @Column(name = "pin")
     private Integer pin;
-    @Column(name = "image")
-    private String image;
 }
