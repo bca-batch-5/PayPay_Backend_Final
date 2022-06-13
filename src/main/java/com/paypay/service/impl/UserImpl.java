@@ -25,12 +25,10 @@ import com.paypay.repository.UserRepo;
 import com.paypay.service.UserService;
 import com.paypay.validation.UserValidation;
 
-// import lombok.experimental.var;
 
 @Service
 public class UserImpl implements UserService {
     HashMap<Integer, User> data = new HashMap<Integer, User>();
-    private Boolean existingEmail = true;
     private Response response;
     @Autowired
     private VariableConstant varconstant;

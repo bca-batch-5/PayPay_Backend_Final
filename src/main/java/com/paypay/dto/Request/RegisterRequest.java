@@ -13,5 +13,4 @@ public class RegisterRequest {
     private String username;
     @NotEmpty(message = "password musti be fill")
     private String password;
-    private String image;
 }
