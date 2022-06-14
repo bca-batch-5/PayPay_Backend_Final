@@ -19,8 +19,11 @@ import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
 import com.paypay.dto.Response.Response;
+import com.paypay.dto.Response.UserDetailResponse;
 import com.paypay.dto.Response.UserResponse;
 import com.paypay.model.User;
+import com.paypay.model.UserDetail;
+import com.paypay.repository.UserDetailRepo;
 import com.paypay.repository.UserRepo;
 import com.paypay.service.UserService;
 import com.paypay.validation.UserValidation;
@@ -34,6 +37,9 @@ public class UserImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private UserDetailRepo userDetailRepo;
 
     @Autowired
     private ModelMapper mapper;
@@ -54,14 +60,19 @@ public class UserImpl implements UserService {
     public Response register(RegisterRequest registerRequest) throws Exception {
         User emailDb = new User();
         User user = new User();
+        UserDetail userDetail = new UserDetail();
         emailDb = userRepo.findByEmail(registerRequest.getEmail());
         validation.createUser(emailDb, registerRequest);
         user = mapper.map(registerRequest, User.class);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userRepo.save(user);
+        userDetail.setNama(registerRequest.getUsername());
+        userDetail.setUser(user);
+        userDetail.setSaldo(500000L);
+        userDetailRepo.save(userDetail);
         data.put(2, user);
-        UserResponse res = mapper.map(user, UserResponse.class);
-        response = new Response(varconstant.getSTATUS_CREATED(), "User Created", res);
+        UserDetailResponse res = mapper.map(userDetail, UserDetailResponse.class);
+        response = new Response(varconstant.getSTATUS_CREATED(), "User Created",res);
         return response;
     }
 

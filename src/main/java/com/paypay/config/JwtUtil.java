@@ -53,8 +53,7 @@ public class JwtUtil {
                 .setSigningKey(base64Secret)
                 .parseClaimsJws(token)
                 .getBody()
-                .get("email")
-                .toString();
+                .getSubject();
     }
 
     public boolean validateToken(String token) {
