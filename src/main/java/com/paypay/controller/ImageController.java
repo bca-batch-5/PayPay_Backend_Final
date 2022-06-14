@@ -1,5 +1,6 @@
 package com.paypay.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.http.HttpHeaders;
@@ -7,10 +8,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +27,10 @@ import com.paypay.service.UploadImageService;
 
 @RestController
 @RequestMapping("/paypay")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageController {
     private Response response;
+    private static String FILE_PATH_ROOT = "src/main/resources/images/";
 
     @Autowired
     private UploadImageService uploadImageService;
@@ -49,4 +54,5 @@ public class ImageController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
     }
+
 }
