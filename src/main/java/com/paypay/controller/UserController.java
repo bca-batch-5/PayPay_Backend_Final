@@ -5,6 +5,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
 import com.paypay.dto.Response.Response;
+import com.paypay.service.UserDetailDataService;
 import com.paypay.service.UserService;
 
 @RestController
@@ -26,6 +29,8 @@ public class UserController {
    
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDetailDataService userDetailDataService;
 
 
     @PostMapping("/register")
@@ -58,5 +63,9 @@ public class UserController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable(value = "email") String email) throws Exception{
+        response = userDetailDataService.getUserByEmail(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }
