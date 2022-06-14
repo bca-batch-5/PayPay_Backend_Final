@@ -30,8 +30,8 @@ public class FilterConfig extends OncePerRequestFilter {
             throws ServletException, IOException {
         String headerAuth = request.getHeader("Authorization");
         // check header is null or not
-        if (headerAuth != null && headerAuth.startsWith("Bearer")) {
-            String jwtToken = headerAuth.substring(0, headerAuth.length());
+        if (headerAuth != null && headerAuth.startsWith("Bearer ")) {
+            String jwtToken = headerAuth.substring(7, headerAuth.length());
             if (jwtToken != null && jwtUtil.validateToken(jwtToken)) {
                 String email = jwtUtil.getUsernameFromToken(jwtToken);
 
