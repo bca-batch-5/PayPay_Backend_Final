@@ -8,7 +8,7 @@ import lombok.Data;
 public class TransferRequest {
     private Integer idTransaction;
     private String email;
-    private Integer nominal;
+    private Long nominal;
     private String note;
     private String emailTo;
 }

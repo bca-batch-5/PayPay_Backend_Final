@@ -9,4 +9,6 @@ public interface TransactionService {
     public Response getTransactionUser(Integer id) throws Exception;
     public Response getTransactionUserLimit4(Integer id) throws Exception;
     public Response getTransactionUserLimit7(Integer id) throws Exception;
+    public Response updateBalance(Integer id) throws Exception;
+    public Response getBalance(Integer id) throws Exception;
 }

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,4 +44,16 @@ public class TransactionController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
+    @PutMapping("/transaksi/balance/{id}")
+    public ResponseEntity<?> updateBalance(@PathVariable Integer id)throws Exception{
+        response = transactionService.updateBalance(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+
+    @GetMapping("/transaksi/getbalance/{id}")
+    public ResponseEntity<?> getBalance(@PathVariable Integer id)throws Exception{
+        response = transactionService.getBalance(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }

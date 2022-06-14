@@ -28,7 +28,7 @@ public class Transaction {
     private User user;
 
     @Column(name = "nominal")
-    private Integer nominal;
+    private Long nominal;
 
     @Column(name = "note")
     private String note;

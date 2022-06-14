@@ -13,9 +13,12 @@ import com.paypay.constant.VariableConstant;
 import com.paypay.dto.Request.TransferRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.dto.Response.TransactionResponse;
+import com.paypay.dto.Response.UserDetailResponse;
 import com.paypay.model.Transaction;
 import com.paypay.model.User;
+import com.paypay.model.UserDetail;
 import com.paypay.repository.TransactionRepo;
+import com.paypay.repository.UserDetailRepo;
 import com.paypay.repository.UserRepo;
 import com.paypay.service.TransactionService;
 import com.paypay.validation.TransactionValidation;
@@ -25,6 +28,9 @@ import com.paypay.validation.TransactionValidation;
 @Service
 public class TransactionImpl implements TransactionService {
     private Response response;
+
+    @Autowired
+    UserDetailRepo userDetailRepo;
 
     @Autowired
     TransactionValidation transactionValidation;
@@ -100,6 +106,32 @@ public class TransactionImpl implements TransactionService {
             res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));
         }
         response = new Response(HttpStatus.FOUND.value(), "data Ditemukan", res);
+        return response;
+    }
+
+    @Override
+    public Response updateBalance(Integer id) throws Exception {
+        UserDetail user = userDetailRepo.findByIdUser(id);
+        Long saldo = user.getSaldo();
+        Long kredit = transactionRepo.getKredit(id);
+        Long debit = transactionRepo.getDebit(id);
+        if (kredit !=null) {
+            user.setSaldo(saldo + kredit);
+        }
+        if (debit !=null) {
+            user.setSaldo(saldo - debit);
+        }
+        userDetailRepo.save(user);
+        UserDetailResponse res = mapper.map(user, UserDetailResponse.class);
+        response = new Response(HttpStatus.OK.value(), "saldo berhasil diupdate", res);
+        return response;
+    }
+
+    @Override
+    public Response getBalance(Integer id) throws Exception {
+        UserDetail user = userDetailRepo.findByIdUser(id);
+        UserDetailResponse res = mapper.map(user, UserDetailResponse.class);
+        response = new Response(HttpStatus.FOUND.value(), "data berhasil didapat", res);
         return response;
     }
 
