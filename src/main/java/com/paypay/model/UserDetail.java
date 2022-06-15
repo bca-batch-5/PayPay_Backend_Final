@@ -25,7 +25,7 @@ public class UserDetail {
     @Column(name = "nama")
     private String nama;
     @Column(name = "no_telpon")
-    private Integer noTelp;
+    private String noTelp;
     @Column(name = "saldo")
     private Long saldo;
     @Column(name = "image")
