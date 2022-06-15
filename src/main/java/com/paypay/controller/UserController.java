@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.paypay.dto.Request.ChangePassRequest;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.InputNoTelpRequest;
@@ -78,6 +79,12 @@ public class UserController {
     @DeleteMapping("/delete-phone/{email}")
     public ResponseEntity<?> deleteNoTelp(@PathVariable(value = "email") String email) throws Exception{
         response = userDetailDataService.deleteNoTelp(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @PutMapping("/change-pass")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePassRequest changePassRequest)throws Exception{
+        response = userService.changePassword(changePassRequest);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
