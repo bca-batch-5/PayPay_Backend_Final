@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.paypay.dto.Request.ChangePassRequest;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
@@ -66,6 +67,13 @@ public class UserController {
     @GetMapping("/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable(value = "email") String email) throws Exception{
         response = userDetailDataService.getUserByEmail(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+
+    @PutMapping("/change-pass")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePassRequest changePassRequest)throws Exception{
+        response = userService.changePassword(changePassRequest);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
