@@ -15,6 +15,8 @@ import com.paypay.Exception.BadRequestException;
 import com.paypay.config.JwtUtil;
 import com.paypay.constant.VariableConstant;
 import com.paypay.dto.Request.ChangePassRequest;
+import com.paypay.dto.Request.ChangePinRequest;
+import com.paypay.dto.Request.CheckPinRequest;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
@@ -158,6 +160,37 @@ public class UserImpl implements UserService {
         userRepo.save(userDb);
         response = new Response(HttpStatus.ACCEPTED.value(),"Password berhasil diganti",res);
         return response;
+    }
+
+    @Override
+    public Response checkPin(CheckPinRequest checkPinRequest) throws Exception {
+        User user = userRepo.findByEmail(checkPinRequest.getEmail());
+        String temp = "";
+            for (int i = 0; i < checkPinRequest.getPin().size(); i++) {
+                temp += checkPinRequest.getPin().get(i);
+            }
+            Integer pin = Integer.parseInt(temp);
+            if (!user.getPin().equals(pin)) {
+                throw new BadRequestException("Pin yang anda masukkan berbeda");
+            }else{
+                response = new Response(HttpStatus.OK.value(), "Pin yang anda masukkan benar", user);
+            }
+        return response;
+    }
+
+    @Override
+    public Response changePin(ChangePinRequest changePinRequest) throws Exception {
+        User user = userRepo.findByEmail(changePinRequest.getEmail());
+        String temp = "";
+            for (int i = 0; i < changePinRequest.getNewPin().size(); i++) {
+                temp += changePinRequest.getNewPin().get(i);
+            }
+            Integer pin = Integer.parseInt(temp);
+            user.setPin(pin);
+            userRepo.save(user);
+            UserResponse res = mapper.map(user, UserResponse.class);
+            response = new Response(HttpStatus.OK.value(),"Pin berhasil diganti", res);
+            return response;
     }
 
 }
