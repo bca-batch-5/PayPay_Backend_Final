@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paypay.constant.VariableConstant;
+import com.paypay.dto.Request.InputNoTelpRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.dto.Response.UserDetailResponse;
 import com.paypay.model.User;
@@ -12,6 +13,7 @@ import com.paypay.model.UserDetail;
 import com.paypay.repository.UserDetailRepo;
 import com.paypay.repository.UserRepo;
 import com.paypay.service.UserDetailDataService;
+import com.paypay.validation.UserValidation;
 
 @Service
 public class UserDetailDataImpl implements UserDetailDataService{
@@ -23,17 +25,43 @@ public class UserDetailDataImpl implements UserDetailDataService{
     private UserDetailRepo userDetailRepo;
 
     @Autowired
-    private ModelMapper map;
+    private ModelMapper mapper;
 
     @Autowired
     private VariableConstant constant;
 
+    @Autowired
+    private UserValidation userValidation;
+
     @Override
     public Response getUserByEmail(String email) throws Exception {
         User user = userRepo.findByEmail(email);
+        userValidation.checkingUserByEmail(user);
         UserDetail userDetail = userDetailRepo.findByUser(user);
-        UserDetailResponse res = map.map(userDetail, UserDetailResponse.class);
+        UserDetailResponse res = mapper.map(userDetail, UserDetailResponse.class);
         response = new Response(constant.getSTATUS_OK(), "Data didapatkan", res); 
+        return response;
+    }
+
+    @Override
+    public Response inputNoTelp(String email, InputNoTelpRequest inputNoTelpRequest) throws Exception {
+        User user = userRepo.findByEmail(email);
+        userValidation.checkingUserByEmail(user);
+        UserDetail userDetail = userDetailRepo.findByUser(user);
+        userDetail.setNoTelp(inputNoTelpRequest.getNoTelp());
+        userDetailRepo.save(userDetail);
+        response = new Response(constant.getSTATUS_CREATED(), "No Telpon Terbuat", userDetail);
+        return response;
+    }
+
+    @Override
+    public Response deleteNoTelp(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
+        userValidation.checkingUserByEmail(user);
+        UserDetail userDetail = userDetailRepo.findByUser(user);
+        userDetail.setNoTelp(null);
+        userDetailRepo.save(userDetail);
+        response = new Response(constant.getSTATUS_OK(), "Nomor Telfon Terhapus", userDetail);
         return response;
     }
     

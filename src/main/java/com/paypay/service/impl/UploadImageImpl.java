@@ -78,8 +78,7 @@ public class UploadImageImpl implements UploadImageService {
             userDetail.setImage(fileName);
             userDetailRepo.save(userDetail);
 
-            String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img").path("/{email}/")
-                    .path(fileName)
+            String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/paypay/img").path("/{email}")
                     .build(email).toString();
 
             FileInfo fileInfo = new FileInfo(fileName, url, file.getContentType());

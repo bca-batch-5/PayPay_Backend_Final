@@ -9,7 +9,7 @@ public class UserDetailResponse {
     private Integer idDetailUser;
     private User user;
     private String nama;
-    private Integer noTelp;
+    private String noTelp;
     private Long saldo;
     private String image;
 }

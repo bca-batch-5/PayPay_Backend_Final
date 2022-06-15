@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.paypay.dto.Request.ChangePassRequest;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
+import com.paypay.dto.Request.InputNoTelpRequest;
 import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
@@ -69,7 +71,16 @@ public class UserController {
         response = userDetailDataService.getUserByEmail(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-
+    @PostMapping("/add-phone/{email}")
+    public ResponseEntity<?> inputNoTelp(@PathVariable(value = "email") String email, @RequestBody InputNoTelpRequest inputNoTelpRequest) throws Exception{
+        response = userDetailDataService.inputNoTelp(email, inputNoTelpRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+    @DeleteMapping("/delete-phone/{email}")
+    public ResponseEntity<?> deleteNoTelp(@PathVariable(value = "email") String email) throws Exception{
+        response = userDetailDataService.deleteNoTelp(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 
     @PutMapping("/change-pass")
     public ResponseEntity<?> changePassword(@RequestBody ChangePassRequest changePassRequest)throws Exception{
