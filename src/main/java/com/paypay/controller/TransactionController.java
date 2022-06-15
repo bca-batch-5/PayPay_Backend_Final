@@ -49,11 +49,4 @@ public class TransactionController {
         response = transactionService.updateBalance(id);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-
-
-    @GetMapping("/transaksi/getbalance/{id}")
-    public ResponseEntity<?> getBalance(@PathVariable Integer id)throws Exception{
-        response = transactionService.getBalance(id);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
 }

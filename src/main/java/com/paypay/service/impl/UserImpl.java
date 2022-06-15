@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.paypay.Exception.BadRequestException;
 import com.paypay.config.JwtUtil;
 import com.paypay.constant.VariableConstant;
+import com.paypay.dto.Request.ChangePassRequest;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.LoginRequest;
@@ -136,6 +138,25 @@ public class UserImpl implements UserService {
             userRepo.save(currentUser);
             response = new Response(varconstant.getSTATUS_OK(), "Password telah terganti", currentUser);
         }
+        return response;
+    }
+
+    @Override
+    public Response changePassword(ChangePassRequest changePassRequest) throws Exception {
+        User userDb = userRepo.findByEmail(changePassRequest.getEmail());
+        if (!passwordEncoder.matches(changePassRequest.getPassword(), userDb.getPassword())) {
+            throw new BadRequestException("Password yang anda masukkan salah");
+        }else{
+            if (!changePassRequest.getNewPassword().equals(changePassRequest.getCheckNewPassword())) {
+                throw new BadRequestException("Password yang anda masukkan berbeda");
+            }else{
+                userDb.setPassword(passwordEncoder.encode(changePassRequest.getNewPassword()));
+            }
+        }
+
+        UserResponse res = mapper.map(userDb, UserResponse.class);
+        userRepo.save(userDb);
+        response = new Response(HttpStatus.ACCEPTED.value(),"Password berhasil diganti",res);
         return response;
     }
 

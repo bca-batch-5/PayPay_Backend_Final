@@ -1,3 +1,4 @@
+C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\config\ResourceConfiguration.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\service\impl\UploadImageImpl.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Response\UserResponse.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Response\TransactionResponse.java
@@ -16,6 +17,7 @@ C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\controller\ImageController.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\config\CorsConfig.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\constant\VariableConstant.java
+C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\service\UserDetailDataService.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\service\UserService.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\validation\UserValidation.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\repository\TransactionRepo.java
@@ -27,6 +29,7 @@ C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Request\LoginRequest.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Request\RegisterRequest.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\model\UserDetail.java
+C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\service\impl\UserDetailDataImpl.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\service\TransactionService.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Response\Response.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\Exception\ErrorMessage.java
@@ -37,5 +40,6 @@ C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Response\FileInfo.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\config\FileStorageProperties\FileStorage.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\config\PayPaySecurityConfig.java
+C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Request\ChangePassRequest.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\dto\Response\UserDetailResponse.java
 C:\Users\INFINIX X1\Documents\PKWT-BCA\Tugas-Akhir\PayPay_Backend_Final\src\main\java\com\paypay\repository\UserRepo.java

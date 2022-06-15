@@ -127,12 +127,4 @@ public class TransactionImpl implements TransactionService {
         return response;
     }
 
-    @Override
-    public Response getBalance(Integer id) throws Exception {
-        UserDetail user = userDetailRepo.findByIdUser(id);
-        UserDetailResponse res = mapper.map(user, UserDetailResponse.class);
-        response = new Response(HttpStatus.FOUND.value(), "data berhasil didapat", res);
-        return response;
-    }
-
 }
