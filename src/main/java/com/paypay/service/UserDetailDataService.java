@@ -9,4 +9,5 @@ public interface UserDetailDataService {
     Response inputNoTelp(String email, InputNoTelpRequest inputNoTelpRequest) throws Exception;
     Response deleteNoTelp(String email) throws Exception;
     Response topUpPayment(String email, TopUpRequest topUpRequest) throws Exception;
+    Response getAllUser() throws Exception;
 }

@@ -48,9 +48,9 @@ public class TransactionImpl implements TransactionService {
     ModelMapper mapper;
 
     @Override
-    public Response transfer(TransferRequest transferRequest) throws Exception {
+    public Response transfer(TransferRequest transferRequest,String email) throws Exception {
         Transaction debitTransaction = new Transaction();
-        User senderUser = userRepo.findByEmail(transferRequest.getEmail());
+        User senderUser = userRepo.findByEmail(email);
         transactionValidation.senderUserValid(senderUser);
         User receiverUser = userRepo.findByEmail(transferRequest.getEmailTo());
         transactionValidation.receiverUserValid(receiverUser);
@@ -77,8 +77,9 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response getTransactionUser(Integer id) throws Exception {
-        List<Transaction> transactionUser = transactionRepo.findByUser(id);
+    public Response getTransactionUser(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
+        List<Transaction> transactionUser = transactionRepo.findByUser(user.getIdUser());
         List<TransactionResponse> res = new ArrayList<>();
         for (int i = 0; i < transactionUser.size(); i++) {
             res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));
@@ -88,8 +89,9 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response getTransactionUserLimit4(Integer id) throws Exception {
-        List<Transaction> transactionUser = transactionRepo.findByUserLimit4(id);
+    public Response getTransactionUserLimit4(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
+        List<Transaction> transactionUser = transactionRepo.findByUserLimit4(user.getIdUser());
         List<TransactionResponse> res = new ArrayList<>();
         for (int i = 0; i < transactionUser.size(); i++) {
             res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));
@@ -99,8 +101,9 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response getTransactionUserLimit7(Integer id) throws Exception {
-        List<Transaction> transactionUser = transactionRepo.findByUserLimit7(id);
+    public Response getTransactionUserLimit7(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
+        List<Transaction> transactionUser = transactionRepo.findByUserLimit7(user.getIdUser());
         List<TransactionResponse> res = new ArrayList<>();
         for (int i = 0; i < transactionUser.size(); i++) {
             res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));
@@ -110,11 +113,12 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response updateBalance(Integer id) throws Exception {
-        UserDetail user = userDetailRepo.findByIdUser(id);
+    public Response updateBalance(String email) throws Exception {
+        User userDb = userRepo.findByEmail(email);
+        UserDetail user = userDetailRepo.findByIdUser(userDb.getIdUser());
         Long saldo = user.getSaldo();
-        Long kredit = transactionRepo.getKredit(id);
-        Long debit = transactionRepo.getDebit(id);
+        Long kredit = transactionRepo.getKredit(userDb.getIdUser());
+        Long debit = transactionRepo.getDebit(userDb.getIdUser());
         if (kredit !=null) {
             user.setSaldo(saldo + kredit);
         }
@@ -124,6 +128,18 @@ public class TransactionImpl implements TransactionService {
         userDetailRepo.save(user);
         UserDetailResponse res = mapper.map(user, UserDetailResponse.class);
         response = new Response(HttpStatus.OK.value(), "saldo berhasil diupdate", res);
+        return response;
+    }
+
+    @Override
+    public Response getTransactionUserLimit5(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
+        List<Transaction> transactionUser = transactionRepo.findByUserLimit5(user.getIdUser());
+        List<TransactionResponse> res = new ArrayList<>();
+        for (int i = 0; i < transactionUser.size(); i++) {
+            res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));
+        }
+        response = new Response(HttpStatus.FOUND.value(), "data Ditemukan", res);
         return response;
     }
 

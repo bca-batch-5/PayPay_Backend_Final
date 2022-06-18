@@ -1,7 +1,11 @@
 package com.paypay.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.paypay.constant.VariableConstant;
@@ -80,6 +84,17 @@ public class UserDetailDataImpl implements UserDetailDataService{
         userDetailRepo.save(userDetail);
         UserDetailResponse res = mapper.map(userDetail, UserDetailResponse.class);
         response = new Response(constant.getSTATUS_OK(), "Top Up Berhasil", res);
+        return response;
+    }
+
+    @Override
+    public Response getAllUser() throws Exception {
+        List<UserDetail> user = userDetailRepo.findAll();
+        List<UserDetailResponse> res = new ArrayList<>();
+        for (int i = 0; i < user.size(); i++) {
+            res.add(mapper.map(user.get(i), UserDetailResponse.class));
+        }
+        response = new Response(HttpStatus.FOUND.value(),"data berhasil didapatkan", res);
         return response;
     }
     

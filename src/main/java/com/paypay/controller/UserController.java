@@ -86,27 +86,33 @@ public class UserController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @PutMapping("/change-pass")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePassRequest changePassRequest)throws Exception{
-        response = userService.changePassword(changePassRequest);
+    @PutMapping("/change-pass/{email}")
+    public ResponseEntity<?> changePassword(@PathVariable(value = "email") String email, @RequestBody ChangePassRequest changePassRequest)throws Exception{
+        response = userService.changePassword(changePassRequest, email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-  
+
     @PostMapping("/topup/payment/{email}")
     public ResponseEntity<?> topUpPayment(@PathVariable(value = "email") String email, @RequestBody TopUpRequest topUpRequest)throws Exception{
         response = userDetailDataService.topUpPayment(email, topUpRequest);
-
-
-    @PostMapping("/check-pin")
-    public ResponseEntity<?> checkPin(@RequestBody CheckPinRequest checkPinRequest) throws Exception{
-        response = userService.checkPin(checkPinRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+    @PostMapping("/check-pin/{email}")
+    public ResponseEntity<?> checkPin(@PathVariable(value = "email") String email, @RequestBody CheckPinRequest checkPinRequest) throws Exception{
+        response = userService.checkPin(checkPinRequest, email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @PutMapping("/change-pin")
-    public ResponseEntity<?> changePin(@RequestBody ChangePinRequest changePinRequest) throws Exception{
-        response = userService.changePin(changePinRequest);
+    @PutMapping("/change-pin/{email}")
+    public ResponseEntity<?> changePin(@PathVariable(value = "email") String email, @RequestBody ChangePinRequest changePinRequest) throws Exception{
+        response = userService.changePin(changePinRequest, email);
 
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @GetMapping("/get-all-user")
+    public ResponseEntity<?> getAllUser() throws Exception{
+        response = userDetailDataService.getAllUser();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
