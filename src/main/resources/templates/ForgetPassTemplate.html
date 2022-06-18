@@ -3,9 +3,20 @@
         <title th:remove="all">Template for HTML email</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     </head>
+    <style>
+        .border-luar-email{
+            width: 100%;
+            height: 150px;
+            text-align: center;
+        }
+    </style>
     <body>
-        <div>
-            <div> Forget Pass Link Change Password</div>
+        <div class="border-luar-email">
+            <div><h2> Forget Pass Link Change Password </h2></div> 
+            <br>
+            <div> <h3>Your Link is Here to change your password</h3></div>
+            <div>http://localhost:3000/forget-password/change-password</div>
+            <div>Dont Give this link to anyone</div>
         </div>
     </body>
 </html>
