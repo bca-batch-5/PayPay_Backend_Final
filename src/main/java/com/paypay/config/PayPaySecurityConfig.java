@@ -59,6 +59,7 @@ public class PayPaySecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/paypay/forget-pass/new-pass").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/paypay/img/{email}").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/img/{email}").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/paypay/send-mail").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
