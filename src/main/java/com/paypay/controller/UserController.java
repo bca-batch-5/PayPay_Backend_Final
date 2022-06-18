@@ -85,9 +85,9 @@ public class UserController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @PutMapping("/change-pass")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePassRequest changePassRequest)throws Exception{
-        response = userService.changePassword(changePassRequest);
+    @PutMapping("/change-pass/{email}")
+    public ResponseEntity<?> changePassword(@PathVariable(value = "email") String email, @RequestBody ChangePassRequest changePassRequest)throws Exception{
+        response = userService.changePassword(changePassRequest, email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

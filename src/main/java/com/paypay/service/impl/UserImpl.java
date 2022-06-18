@@ -144,8 +144,8 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public Response changePassword(ChangePassRequest changePassRequest) throws Exception {
-        User userDb = userRepo.findByEmail(changePassRequest.getEmail());
+    public Response changePassword(ChangePassRequest changePassRequest, String email) throws Exception {
+        User userDb = userRepo.findByEmail(email);
         if (!passwordEncoder.matches(changePassRequest.getPassword(), userDb.getPassword())) {
             throw new BadRequestException("Password yang anda masukkan salah");
         }else{
