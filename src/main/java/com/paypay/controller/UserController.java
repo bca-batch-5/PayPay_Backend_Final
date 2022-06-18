@@ -97,6 +97,7 @@ public class UserController {
         response = userDetailDataService.topUpPayment(email, topUpRequest);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
     @PostMapping("/check-pin/{email}")
     public ResponseEntity<?> checkPin(@PathVariable(value = "email") String email, @RequestBody CheckPinRequest checkPinRequest) throws Exception{
         response = userService.checkPin(checkPinRequest, email);
@@ -106,6 +107,7 @@ public class UserController {
     @PutMapping("/change-pin/{email}")
     public ResponseEntity<?> changePin(@PathVariable(value = "email") String email, @RequestBody ChangePinRequest changePinRequest) throws Exception{
         response = userService.changePin(changePinRequest, email);
+
 
         return ResponseEntity.status(response.getStatus()).body(response);
     }
