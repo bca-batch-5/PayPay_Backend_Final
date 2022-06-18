@@ -23,6 +23,7 @@ import com.paypay.dto.Request.InputNoTelpRequest;
 import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
+import com.paypay.dto.Request.TopUpRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.service.UserDetailDataService;
 import com.paypay.service.UserService;
@@ -91,6 +92,11 @@ public class UserController {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
+    @PostMapping("/topup/payment/{email}")
+    public ResponseEntity<?> topUpPayment(@PathVariable(value = "email") String email, @RequestBody TopUpRequest topUpRequest)throws Exception{
+        response = userDetailDataService.topUpPayment(email, topUpRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
     @PostMapping("/check-pin")
     public ResponseEntity<?> checkPin(@RequestBody CheckPinRequest checkPinRequest) throws Exception{
         response = userService.checkPin(checkPinRequest);
@@ -100,6 +106,7 @@ public class UserController {
     @PutMapping("/change-pin")
     public ResponseEntity<?> changePin(@RequestBody ChangePinRequest changePinRequest) throws Exception{
         response = userService.changePin(changePinRequest);
+
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
