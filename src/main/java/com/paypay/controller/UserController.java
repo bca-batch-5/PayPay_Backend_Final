@@ -95,7 +95,8 @@ public class UserController {
     @PostMapping("/topup/payment/{email}")
     public ResponseEntity<?> topUpPayment(@PathVariable(value = "email") String email, @RequestBody TopUpRequest topUpRequest)throws Exception{
         response = userDetailDataService.topUpPayment(email, topUpRequest);
-
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 
     @PostMapping("/check-pin")
     public ResponseEntity<?> checkPin(@RequestBody CheckPinRequest checkPinRequest) throws Exception{
