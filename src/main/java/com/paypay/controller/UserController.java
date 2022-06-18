@@ -21,6 +21,7 @@ import com.paypay.dto.Request.InputNoTelpRequest;
 import com.paypay.dto.Request.LoginRequest;
 import com.paypay.dto.Request.NewPassRequest;
 import com.paypay.dto.Request.RegisterRequest;
+import com.paypay.dto.Request.TopUpRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.service.UserDetailDataService;
 import com.paypay.service.UserService;
@@ -85,6 +86,11 @@ public class UserController {
     @PutMapping("/change-pass")
     public ResponseEntity<?> changePassword(@RequestBody ChangePassRequest changePassRequest)throws Exception{
         response = userService.changePassword(changePassRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+    @PostMapping("/topup/payment/{email}")
+    public ResponseEntity<?> topUpPayment(@PathVariable(value = "email") String email, @RequestBody TopUpRequest topUpRequest)throws Exception{
+        response = userDetailDataService.topUpPayment(email, topUpRequest);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
