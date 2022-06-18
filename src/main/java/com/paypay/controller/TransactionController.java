@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.paypay.dto.Request.GetTransactionrequest;
 import com.paypay.dto.Request.TransferRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.service.TransactionService;
@@ -23,9 +22,9 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    @PostMapping("/transfer")
-    public ResponseEntity<?> transfer(@RequestBody TransferRequest transferRequest) throws Exception{
-        response = transactionService.transfer(transferRequest);
+    @PostMapping("/transfer/{email}")
+    public ResponseEntity<?> transfer(@PathVariable(value ="email" ) String email, @RequestBody TransferRequest transferRequest) throws Exception{
+        response = transactionService.transfer(transferRequest,email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
@@ -44,15 +43,15 @@ public class TransactionController {
         response = transactionService.getTransactionUserLimit5(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-    @GetMapping("/transaksi/limit7/user")
-    public ResponseEntity<?> getTransactionUserLimit7(@RequestBody GetTransactionrequest getTransactionrequest)throws Exception{
-        response = transactionService.getTransactionUserLimit7(getTransactionrequest);
+    @GetMapping("/transaksi/limit7/{email}")
+    public ResponseEntity<?> getTransactionUserLimit7(@PathVariable(value = "email") String email)throws Exception{
+        response = transactionService.getTransactionUserLimit7(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @PutMapping("/transaksi/balance/user")
-    public ResponseEntity<?> updateBalance(@RequestBody GetTransactionrequest getTransactionrequest)throws Exception{
-        response = transactionService.updateBalance(getTransactionrequest);
+    @PutMapping("/transaksi/balance/{email}")
+    public ResponseEntity<?> updateBalance(@PathVariable(value = "email") String email)throws Exception{
+        response = transactionService.updateBalance(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

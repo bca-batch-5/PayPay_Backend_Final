@@ -163,8 +163,8 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public Response checkPin(CheckPinRequest checkPinRequest) throws Exception {
-        User user = userRepo.findByEmail(checkPinRequest.getEmail());
+    public Response checkPin(CheckPinRequest checkPinRequest,String email) throws Exception {
+        User user = userRepo.findByEmail(email);
         String temp = "";
             for (int i = 0; i < checkPinRequest.getPin().size(); i++) {
                 temp += checkPinRequest.getPin().get(i);
@@ -179,8 +179,8 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public Response changePin(ChangePinRequest changePinRequest) throws Exception {
-        User user = userRepo.findByEmail(changePinRequest.getEmail());
+    public Response changePin(ChangePinRequest changePinRequest,String email) throws Exception {
+        User user = userRepo.findByEmail(email);
         String temp = "";
             for (int i = 0; i < changePinRequest.getNewPin().size(); i++) {
                 temp += changePinRequest.getNewPin().get(i);

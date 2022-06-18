@@ -1,15 +1,14 @@
 package com.paypay.service;
 
-import com.paypay.dto.Request.GetTransactionrequest;
 import com.paypay.dto.Request.TransferRequest;
 import com.paypay.dto.Response.Response;
 
 
 public interface TransactionService {
-    public Response transfer(TransferRequest transferRequest)throws Exception;
+    public Response transfer(TransferRequest transferRequest, String email)throws Exception;
     public Response getTransactionUser(String email) throws Exception;
     public Response getTransactionUserLimit4(String email) throws Exception;
     public Response getTransactionUserLimit5(String email) throws Exception;
-    public Response getTransactionUserLimit7(GetTransactionrequest getTransactionrequest) throws Exception;
-    public Response updateBalance(GetTransactionrequest getTransactionrequest) throws Exception;
+    public Response getTransactionUserLimit7(String email) throws Exception;
+    public Response updateBalance(String email) throws Exception;
 }

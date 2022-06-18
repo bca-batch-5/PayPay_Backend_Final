@@ -17,6 +17,6 @@ public interface UserService {
     public Response inputNewPass(NewPassRequest newPassRequest) throws Exception;
     public Response createPin(CreatePinRequest createPinRequest) throws Exception;
     public Response changePassword(ChangePassRequest changePassRequest, String email)throws Exception;
-    public Response checkPin(CheckPinRequest checkPinRequest) throws Exception;
-    public Response changePin(ChangePinRequest changePinRequest)throws Exception;
+    public Response checkPin(CheckPinRequest checkPinRequest,String email) throws Exception;
+    public Response changePin(ChangePinRequest changePinRequest,String email)throws Exception;
 }

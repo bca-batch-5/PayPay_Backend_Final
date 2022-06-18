@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.paypay.constant.VariableConstant;
-import com.paypay.dto.Request.GetTransactionrequest;
 import com.paypay.dto.Request.TransferRequest;
 import com.paypay.dto.Response.Response;
 import com.paypay.dto.Response.TransactionResponse;
@@ -49,9 +48,9 @@ public class TransactionImpl implements TransactionService {
     ModelMapper mapper;
 
     @Override
-    public Response transfer(TransferRequest transferRequest) throws Exception {
+    public Response transfer(TransferRequest transferRequest,String email) throws Exception {
         Transaction debitTransaction = new Transaction();
-        User senderUser = userRepo.findByEmail(transferRequest.getEmail());
+        User senderUser = userRepo.findByEmail(email);
         transactionValidation.senderUserValid(senderUser);
         User receiverUser = userRepo.findByEmail(transferRequest.getEmailTo());
         transactionValidation.receiverUserValid(receiverUser);
@@ -102,8 +101,8 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response getTransactionUserLimit7(GetTransactionrequest getTransactionrequest) throws Exception {
-        User user = userRepo.findByEmail(getTransactionrequest.getEmail());
+    public Response getTransactionUserLimit7(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
         List<Transaction> transactionUser = transactionRepo.findByUserLimit7(user.getIdUser());
         List<TransactionResponse> res = new ArrayList<>();
         for (int i = 0; i < transactionUser.size(); i++) {
@@ -114,8 +113,8 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response updateBalance(GetTransactionrequest getTransactionrequest) throws Exception {
-        User userDb = userRepo.findByEmail(getTransactionrequest.getEmail());
+    public Response updateBalance(String email) throws Exception {
+        User userDb = userRepo.findByEmail(email);
         UserDetail user = userDetailRepo.findByIdUser(userDb.getIdUser());
         Long saldo = user.getSaldo();
         Long kredit = transactionRepo.getKredit(userDb.getIdUser());
