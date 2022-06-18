@@ -12,6 +12,7 @@ public class TransactionResponse {
     private User user;
     private Integer nominal;
     private String note;
+    private String transactionType;
     private User from;
     private User to;
     private LocalDateTime date;

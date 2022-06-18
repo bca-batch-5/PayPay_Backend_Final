@@ -5,9 +5,10 @@ import com.paypay.dto.Response.Response;
 
 
 public interface TransactionService {
-    public Response transfer(TransferRequest transferRequest)throws Exception;
-    public Response getTransactionUser(Integer id) throws Exception;
-    public Response getTransactionUserLimit4(Integer id) throws Exception;
-    public Response getTransactionUserLimit7(Integer id) throws Exception;
-    public Response updateBalance(Integer id) throws Exception;
+    public Response transfer(TransferRequest transferRequest, String email)throws Exception;
+    public Response getTransactionUser(String email) throws Exception;
+    public Response getTransactionUserLimit4(String email) throws Exception;
+    public Response getTransactionUserLimit5(String email) throws Exception;
+    public Response getTransactionUserLimit7(String email) throws Exception;
+    public Response updateBalance(String email) throws Exception;
 }
