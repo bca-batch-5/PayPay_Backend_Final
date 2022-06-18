@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paypay.dto.Request.ChangePassRequest;
+import com.paypay.dto.Request.ChangePinRequest;
+import com.paypay.dto.Request.CheckPinRequest;
 import com.paypay.dto.Request.CreatePinRequest;
 import com.paypay.dto.Request.ForgetPassRequest;
 import com.paypay.dto.Request.InputNoTelpRequest;
@@ -33,6 +35,7 @@ public class UserController {
    
     @Autowired
     private UserService userService;
+
     @Autowired
     private UserDetailDataService userDetailDataService;
 
@@ -88,9 +91,22 @@ public class UserController {
         response = userService.changePassword(changePassRequest);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+  
     @PostMapping("/topup/payment/{email}")
     public ResponseEntity<?> topUpPayment(@PathVariable(value = "email") String email, @RequestBody TopUpRequest topUpRequest)throws Exception{
         response = userDetailDataService.topUpPayment(email, topUpRequest);
+
+
+    @PostMapping("/check-pin")
+    public ResponseEntity<?> checkPin(@RequestBody CheckPinRequest checkPinRequest) throws Exception{
+        response = userService.checkPin(checkPinRequest);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @PutMapping("/change-pin")
+    public ResponseEntity<?> changePin(@RequestBody ChangePinRequest changePinRequest) throws Exception{
+        response = userService.changePin(changePinRequest);
+
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
