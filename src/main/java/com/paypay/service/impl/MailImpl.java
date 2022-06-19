@@ -29,7 +29,7 @@ public class MailImpl implements MailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         Context context = new Context();
-        helper.setFrom("paypaycorp13@gmail.com");
+        helper.setFrom("komikremaja12@gmail.com");
         helper.setTo(mailRequest.getTo());
         helper.setSubject(mailRequest.getSubject());
         String html = templateEngine.process("ForgetPassTemplate.html", context);
