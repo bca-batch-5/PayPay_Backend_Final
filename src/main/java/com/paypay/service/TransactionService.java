@@ -12,4 +12,7 @@ public interface TransactionService {
     public Response getTransactionUserLimit7Kredit(String email) throws Exception;
     public Response getTransactionUserLimit7Debit(String email) throws Exception;
     public Response updateBalance(String email) throws Exception;
+    public Response getReceiverProfile(String email);
+    public Response getReceiverProfileByEmail(String email);
+    
 }

@@ -21,6 +21,7 @@ public interface TransactionRepo extends JpaRepository<Transaction, Integer> {
 
     @Query(value = "SELECT * FROM `transaction` WHERE id_user=? AND transaction_type='Kredit' ORDER BY date DESC LIMIT 7;", nativeQuery = true)
     List<Transaction> findByUserLimit7Kredit(Integer idUser);
+    
     @Query(value = "SELECT * FROM `transaction` WHERE id_user=? AND transaction_type='Debit' ORDER BY date DESC LIMIT 7;", nativeQuery = true)
     List<Transaction> findByUserLimit7Debit(Integer idUser);
 

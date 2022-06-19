@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.paypay.constant.VariableConstant;
 import com.paypay.dto.Request.TransferRequest;
+import com.paypay.dto.Response.ReceiverProfileResponse;
 import com.paypay.dto.Response.Response;
 import com.paypay.dto.Response.TransactionResponse;
 import com.paypay.dto.Response.UserDetailResponse;
+import com.paypay.dto.Response.UserResponse;
 import com.paypay.model.Transaction;
 import com.paypay.model.User;
 import com.paypay.model.UserDetail;
@@ -22,8 +24,6 @@ import com.paypay.repository.UserDetailRepo;
 import com.paypay.repository.UserRepo;
 import com.paypay.service.TransactionService;
 import com.paypay.validation.TransactionValidation;
-
-
 
 @Service
 public class TransactionImpl implements TransactionService {
@@ -48,7 +48,7 @@ public class TransactionImpl implements TransactionService {
     ModelMapper mapper;
 
     @Override
-    public Response transfer(TransferRequest transferRequest,String email) throws Exception {
+    public Response transfer(TransferRequest transferRequest, String email) throws Exception {
         Transaction debitTransaction = new Transaction();
         User senderUser = userRepo.findByEmail(email);
         transactionValidation.senderUserValid(senderUser);
@@ -69,7 +69,7 @@ public class TransactionImpl implements TransactionService {
         kreditTransaction.setType("Kredit");
         kreditTransaction.setDate(LocalDateTime.now());
         transactionRepo.save(kreditTransaction);
-        
+
         TransactionResponse res = mapper.map(debitTransaction, TransactionResponse.class);
         response = new Response(varconstant.getSTATUS_CREATED(), "transaksi berhasil", res);
 
@@ -131,10 +131,10 @@ public class TransactionImpl implements TransactionService {
         Long saldo = user.getSaldo();
         Long kredit = transactionRepo.getKredit(userDb.getIdUser());
         Long debit = transactionRepo.getDebit(userDb.getIdUser());
-        if (kredit !=null) {
+        if (kredit != null) {
             user.setSaldo(saldo + kredit);
         }
-        if (debit !=null) {
+        if (debit != null) {
             user.setSaldo(saldo - debit);
         }
         userDetailRepo.save(user);
@@ -155,4 +155,55 @@ public class TransactionImpl implements TransactionService {
         return response;
     }
 
-}
+    @Override
+    public Response getReceiverProfile(String email) {
+        List<UserDetail> userDetailDb = userDetailRepo.findAll();
+        List<ReceiverProfileResponse> responseReciver = new ArrayList<>();
+        ReceiverProfileResponse receiverSingle;
+        for (int i = 0; i < userDetailDb.size(); i++) {
+
+            if (!userDetailDb.get(i).getUser().getEmail().equals(email)) {
+
+                receiverSingle = new ReceiverProfileResponse();
+                receiverSingle.setEmail(userDetailDb.get(i).getUser().getEmail());
+                receiverSingle.setIdUser(userDetailDb.get(i).getUser().getIdUser());
+                if (userDetailDb.get(i).getImage() == null) {
+                    receiverSingle
+                            .setImage(null);
+                } else {
+                    receiverSingle
+                            .setImage("http://localhost:8080/paypay/img/" + userDetailDb.get(i).getUser().getEmail());
+                }
+                receiverSingle.setNama(userDetailDb.get(i).getNama());
+
+                responseReciver.add(receiverSingle);
+
+            }
+        }
+        response = new Response(HttpStatus.OK.value(), "GET Data Receiver Profil success", responseReciver);
+        return response;
+    }
+   
+
+    @Override
+    public Response getReceiverProfileByEmail(String email) {
+        User userdb = userRepo.findByEmail(email);
+        UserDetail userDetailDb = userDetailRepo.findByIdUser(userdb.getIdUser());
+        ReceiverProfileResponse receiverSingle;
+        receiverSingle = new ReceiverProfileResponse();
+        receiverSingle.setEmail(userDetailDb.getUser().getEmail());
+        receiverSingle.setIdUser(userDetailDb.getUser().getIdUser());
+        if (userDetailDb.getImage() == null) {
+            receiverSingle
+                    .setImage(null);
+        } else {
+            receiverSingle
+                    .setImage("http://localhost:8080/paypay/img/" + userDetailDb.getUser().getEmail());
+        }
+        receiverSingle.setNama(userDetailDb.getNama());
+
+        response = new Response(HttpStatus.OK.value(), "GET Data Receiver Profil success", receiverSingle);
+        return response;
+    }
+
+};
