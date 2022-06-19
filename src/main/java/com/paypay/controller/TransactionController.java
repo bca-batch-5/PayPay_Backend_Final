@@ -64,4 +64,10 @@ public class TransactionController {
         response = transactionService.getReceiverProfile(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @GetMapping("/receiver-profil/email/{email}")
+    public ResponseEntity<?> getReceiverProfileByEmail(@PathVariable(value = "email") String email){
+        response = transactionService.getReceiverProfileByEmail(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }

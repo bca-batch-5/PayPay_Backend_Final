@@ -169,10 +169,10 @@ public class TransactionImpl implements TransactionService {
                 receiverSingle.setIdUser(userDetailDb.get(i).getUser().getIdUser());
                 if (userDetailDb.get(i).getImage() == null) {
                     receiverSingle
-                    .setImage(null);
-                }else{
+                            .setImage(null);
+                } else {
                     receiverSingle
-                    .setImage("http://localhost:8080/paypay/img/" + userDetailDb.get(i).getUser().getEmail());
+                            .setImage("http://localhost:8080/paypay/img/" + userDetailDb.get(i).getUser().getEmail());
                 }
                 receiverSingle.setNama(userDetailDb.get(i).getNama());
 
@@ -183,5 +183,27 @@ public class TransactionImpl implements TransactionService {
         response = new Response(HttpStatus.OK.value(), "GET Data Receiver Profil success", responseReciver);
         return response;
     }
+   
 
-}
+    @Override
+    public Response getReceiverProfileByEmail(String email) {
+        User userdb = userRepo.findByEmail(email);
+        UserDetail userDetailDb = userDetailRepo.findByIdUser(userdb.getIdUser());
+        ReceiverProfileResponse receiverSingle;
+        receiverSingle = new ReceiverProfileResponse();
+        receiverSingle.setEmail(userDetailDb.getUser().getEmail());
+        receiverSingle.setIdUser(userDetailDb.getUser().getIdUser());
+        if (userDetailDb.getImage() == null) {
+            receiverSingle
+                    .setImage(null);
+        } else {
+            receiverSingle
+                    .setImage("http://localhost:8080/paypay/img/" + userDetailDb.getUser().getEmail());
+        }
+        receiverSingle.setNama(userDetailDb.getNama());
+
+        response = new Response(HttpStatus.OK.value(), "GET Data Receiver Profil success", receiverSingle);
+        return response;
+    }
+
+};
