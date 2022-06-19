@@ -43,9 +43,14 @@ public class TransactionController {
         response = transactionService.getTransactionUserLimit5(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-    @GetMapping("/transaksi/limit7/{email}")
-    public ResponseEntity<?> getTransactionUserLimit7(@PathVariable(value = "email") String email)throws Exception{
-        response = transactionService.getTransactionUserLimit7(email);
+    @GetMapping("/transaksi/limit7/Kredit/{email}")
+    public ResponseEntity<?> getTransactionUserLimit7Kredit(@PathVariable(value = "email") String email)throws Exception{
+        response = transactionService.getTransactionUserLimit7Kredit(email);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+    @GetMapping("/transaksi/limit7/Debit/{email}")
+    public ResponseEntity<?> getTransactionUserLimit7Debit(@PathVariable(value = "email") String email)throws Exception{
+        response = transactionService.getTransactionUserLimit7Debit(email);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

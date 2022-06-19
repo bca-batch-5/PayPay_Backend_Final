@@ -101,9 +101,21 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public Response getTransactionUserLimit7(String email) throws Exception {
+    public Response getTransactionUserLimit7Kredit(String email) throws Exception {
         User user = userRepo.findByEmail(email);
-        List<Transaction> transactionUser = transactionRepo.findByUserLimit7(user.getIdUser());
+        List<Transaction> transactionUser = transactionRepo.findByUserLimit7Kredit(user.getIdUser());
+        List<TransactionResponse> res = new ArrayList<>();
+        for (int i = 0; i < transactionUser.size(); i++) {
+            res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));
+        }
+        response = new Response(HttpStatus.FOUND.value(), "data Ditemukan", res);
+        return response;
+    }
+
+    @Override
+    public Response getTransactionUserLimit7Debit(String email) throws Exception {
+        User user = userRepo.findByEmail(email);
+        List<Transaction> transactionUser = transactionRepo.findByUserLimit7Debit(user.getIdUser());
         List<TransactionResponse> res = new ArrayList<>();
         for (int i = 0; i < transactionUser.size(); i++) {
             res.add(mapper.map(transactionUser.get(i), TransactionResponse.class));

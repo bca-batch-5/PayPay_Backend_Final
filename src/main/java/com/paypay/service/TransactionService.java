@@ -9,6 +9,7 @@ public interface TransactionService {
     public Response getTransactionUser(String email) throws Exception;
     public Response getTransactionUserLimit4(String email) throws Exception;
     public Response getTransactionUserLimit5(String email) throws Exception;
-    public Response getTransactionUserLimit7(String email) throws Exception;
+    public Response getTransactionUserLimit7Kredit(String email) throws Exception;
+    public Response getTransactionUserLimit7Debit(String email) throws Exception;
     public Response updateBalance(String email) throws Exception;
 }
