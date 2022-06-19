@@ -73,6 +73,7 @@ public class UserImpl implements UserService {
         userRepo.save(user);
         userDetail.setNama(registerRequest.getUsername());
         userDetail.setUser(user);
+        userDetail.setSaldo(0L);
         userDetailRepo.save(userDetail);
         data.put(2, user);
         UserDetailResponse res = mapper.map(userDetail, UserDetailResponse.class);
