@@ -19,9 +19,8 @@ public class UserDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDetailUser;
-    @OneToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    private User user;
+    @Column(name = "user")
+    private Integer user;
     @Column(name = "nama")
     private String nama;
     @Column(name = "no_telpon")

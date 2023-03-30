@@ -72,8 +72,8 @@ public class UserImpl implements UserService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userRepo.save(user);
         userDetail.setNama(registerRequest.getUsername());
-        userDetail.setUser(user);
-        userDetail.setSaldo(500000L);
+        userDetail.setUser(user.getIdUser());
+        userDetail.setSaldo(0L);
         userDetailRepo.save(userDetail);
         data.put(2, user);
         UserDetailResponse res = mapper.map(userDetail, UserDetailResponse.class);

@@ -1,13 +1,17 @@
 com\paypay\config\FilterConfig.class
+com\paypay\dto\Request\ChangePinRequest.class
+com\paypay\controller\MailController.class
 com\paypay\constant\VariableConstant.class
 com\paypay\controller\TransactionController.class
 com\paypay\repository\TransactionRepo.class
+com\paypay\service\impl\MailImpl.class
 com\paypay\validation\TopUpValidation.class
 com\paypay\repository\UserRepo.class
 com\paypay\service\UploadImageService.class
 com\paypay\config\CorsConfig.class
 com\paypay\model\Transaction.class
 com\paypay\validation\UserValidation.class
+com\paypay\config\Thymeleaf\ThymeleafConfig.class
 com\paypay\service\TransactionService.class
 com\paypay\controller\UserController.class
 com\paypay\dto\Request\TopUpRequest.class
@@ -21,6 +25,7 @@ com\paypay\dto\Request\NewPassRequest.class
 com\paypay\controller\ImageController.class
 com\paypay\PaypayApplication.class
 com\paypay\config\PayPaySecurityConfig.class
+com\paypay\dto\Request\CheckPinRequest.class
 com\paypay\dto\Response\Response.class
 com\paypay\config\ResourceConfiguration.class
 com\paypay\Exception\BadRequestException.class
@@ -36,9 +41,11 @@ com\paypay\config\JwtUtil.class
 com\paypay\config\PayPayConfig.class
 com\paypay\dto\Response\UserDetailResponse.class
 com\paypay\service\impl\TransactionImpl.class
+com\paypay\service\MailService.class
 com\paypay\Exception\GlobalHandler.class
 com\paypay\service\UserDetailDataService.class
 com\paypay\dto\Request\ChangePassRequest.class
+com\paypay\dto\Request\MailRequest.class
 com\paypay\dto\Request\LoginRequest.class
 com\paypay\dto\Request\TransferRequest.class
 com\paypay\dto\Response\FileInfo.class

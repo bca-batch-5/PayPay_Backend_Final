@@ -7,9 +7,8 @@ import lombok.Data;
 @Data
 public class UserDetailResponse {
     private Integer idDetailUser;
-    private User user;
+    private Integer user;
     private String nama;
     private String noTelp;
     private Long saldo;
-    private String image;
 }

@@ -29,7 +29,7 @@ import com.paypay.service.UserDetailDataService;
 import com.paypay.service.UserService;
 
 @RestController
-@RequestMapping("/paypay")
+@RequestMapping("/user-service")
 public class UserController {
     private Response response;
    

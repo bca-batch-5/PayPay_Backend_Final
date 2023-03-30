@@ -22,36 +22,36 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    @PostMapping("/transfer/{email}")
-    public ResponseEntity<?> transfer(@PathVariable(value ="email" ) String email, @RequestBody TransferRequest transferRequest) throws Exception{
-        response = transactionService.transfer(transferRequest,email);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
+    // @PostMapping("/transfer/{email}")
+    // public ResponseEntity<?> transfer(@PathVariable(value ="email" ) String email, @RequestBody TransferRequest transferRequest) throws Exception{
+    //     response = transactionService.transfer(transferRequest,email);
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
 
-    @GetMapping("/transaksi/{email}")
-    public ResponseEntity<?> getTransactionUser(@PathVariable(value = "email")String email)throws Exception{
-        response = transactionService.getTransactionUser(email);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
-    @GetMapping("/transaksi/limit4/{email}")
-    public ResponseEntity<?> getTransactionUserLimit4(@PathVariable(value = "email") String email)throws Exception{
-        response = transactionService.getTransactionUserLimit4(email);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
-    @GetMapping("/transaksi/limit5/{email}")
-    public ResponseEntity<?> getTransactionUserLimit5(@PathVariable(value = "email") String email)throws Exception{
-        response = transactionService.getTransactionUserLimit5(email);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
-    @GetMapping("/transaksi/limit7/{email}")
-    public ResponseEntity<?> getTransactionUserLimit7(@PathVariable(value = "email") String email)throws Exception{
-        response = transactionService.getTransactionUserLimit7(email);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
+    // @GetMapping("/transaksi/{email}")
+    // public ResponseEntity<?> getTransactionUser(@PathVariable(value = "email")String email)throws Exception{
+    //     response = transactionService.getTransactionUser(email);
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
+    // @GetMapping("/transaksi/limit4/{email}")
+    // public ResponseEntity<?> getTransactionUserLimit4(@PathVariable(value = "email") String email)throws Exception{
+    //     response = transactionService.getTransactionUserLimit4(email);
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
+    // @GetMapping("/transaksi/limit5/{email}")
+    // public ResponseEntity<?> getTransactionUserLimit5(@PathVariable(value = "email") String email)throws Exception{
+    //     response = transactionService.getTransactionUserLimit5(email);
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
+    // @GetMapping("/transaksi/limit7/{email}")
+    // public ResponseEntity<?> getTransactionUserLimit7(@PathVariable(value = "email") String email)throws Exception{
+    //     response = transactionService.getTransactionUserLimit7(email);
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
 
-    @PutMapping("/transaksi/balance/{email}")
-    public ResponseEntity<?> updateBalance(@PathVariable(value = "email") String email)throws Exception{
-        response = transactionService.updateBalance(email);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
+    // @PutMapping("/transaksi/balance/{email}")
+    // public ResponseEntity<?> updateBalance(@PathVariable(value = "email") String email)throws Exception{
+    //     response = transactionService.updateBalance(email);
+    //     return ResponseEntity.status(response.getStatus()).body(response);
+    // }
 }
